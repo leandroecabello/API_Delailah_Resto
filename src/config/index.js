@@ -5,7 +5,7 @@ const config = {
         USER: 'root',
         PASS: '',
         PORT: '3306',
-        HOST: 'sleepy-mesa-92891.herokuapp.com'
+        HOST: 'https://sleepy-mesa-92891.herokuapp.com'
     },
     JWT: {
         PRIVATE_KEY: 'secret',
