@@ -77,7 +77,7 @@ class OrdersController{
                 
                 } else {
                  
-                    res.status(404).json({ message: 'Not found id' });
+                    res.status(404).json({ message: 'Not found id' })
                 }
         
             } catch (error) {
@@ -107,7 +107,7 @@ class OrdersController{
                 
                 } else {
                 
-                    res.status(404).json({message: 'Not found id' });
+                    res.status(404).json({message: 'Not found id' })
                 }
 
             } catch(error) {
