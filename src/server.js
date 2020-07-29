@@ -19,5 +19,5 @@ const dbconnection = (async  () => {
         console.error('Unable to connect to the database:', err)
       }
 })()  
- 
+
 module.exports = sequelize    

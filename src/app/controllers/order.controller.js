@@ -32,28 +32,34 @@ class OrdersController{
         }   
     }
 
-    static async add(req, res, next) {
+    static async add(req, res) {
         
         const userId = req.user.id
+        console.log(userId)
+        let montoTotal = null            
 
         try {
-            const { date_time= new Date(), total, state = "nuevo", user_id = userId, paymentmethod, products } = req.body
+            const { products } = req.body
             
-            let montoTotal = 0             
 
             for (let data in products){
                 let product = await ProductsService.getOneById(products[data].product_id)
                 let subtotal = product[0].price * products[data].quantity
                 montoTotal += subtotal
+                console.log(product)
             }
-                
-            total = montoTotal
+           
+            const { date_time= new Date(), total = montoTotal, state = "nuevo", user_id = userId, paymentmethod} = req.body
+           
+            //total = montoTotal
+            //console.log(total)
             let order = await OrdersService.store(date_time, total, state, user_id, paymentmethod)
+            //console.log(order)
             res.status(201).json({ msg: "Order created successfully", id: order.id })
         }
     
         catch (error) {
-
+            console.log(error)
             res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
         }
     }

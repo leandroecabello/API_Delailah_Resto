@@ -7,8 +7,8 @@ router
     .get('/', verifyToken, verifyRole, async(req, res) => {
         await OrdersController.getAll(req, res)
     })
-    .post('/', verifyToken, async(req, res, next) => {
-        await OrdersController.add(req, res, next)
+    .post('/', verifyToken, async(req, res) => {
+        await OrdersController.add(req, res)
     })
     .get('/:id', verifyToken, verifyRole, async(req, res) => {
         await OrdersController.getById(req, res)
