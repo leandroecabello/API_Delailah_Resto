@@ -1,5 +1,6 @@
 const ProductsService = require('../service/product.service')
 const OrdersService = require('../service/order.service')
+const OrderDetailService = require('../service/orderdetail.service')
 const { filterParams } = require('../middlewares/functions')
 
 class OrdersController{
@@ -48,14 +49,25 @@ class OrdersController{
                 //console.log(product)
             }
            
-            const { date_time= new Date(), total = montoTotal, state = "nuevo", user_id = userId, paymentmethod} = req.body
+            const { date_time = new Date(), total = montoTotal, state = "nuevo", user_id = userId, paymentmethod } = req.body
            
-            let order = await OrdersService.store(date_time, total, state, user_id, paymentmethod)
-            res.status(201).json({ msg: "Order created successfully", id: order.id })
-        
+            let order = await OrdersService.store({ date_time, total, state, user_id, paymentmethod })
+            
+            for(let p in products){
+                let product = await ProductsService.getOneById(products[p].product_id)
+                let subTotal = product[0].price * products[p].quantity
+                console.log(product)
+                 
+                const { quantity = products[p].quantity, subtotal = subTotal, product_id = products[p].product_id , orders_id = order[0] } = req.body
+                let orderdetail = await OrderDetailService.store({ quantity, subtotal, product_id, orders_id }) 
+                console.log(orderdetail)
+            }
+
+            res.status(201).json({ msg: "Order created successfully", id: order[0] })
+
         } catch (error) {
             
-            //console.log(error)
+            console.log(error)
             res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
         }
     }

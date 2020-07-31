@@ -15,19 +15,18 @@ class OrdersService {
         });
     }
 
-    static async store(date_time, total, state, user_id, paymentmethod, product) {
-     
-        let order
-        await sequelize.query('INSERT INTO orders  VALUES  (null, ?, ?, ?, ?, ?)',
-            { replacements: [date_time, total, state, user_id, paymentmethod] })
-            .then(function (results) {
-                order = results[0]
-            })
-            for(let data in product){
-                await sequelize.query('INSERT INTO orderdetail (id_product, id_order, quantity) VALUES (?, ?, ?)',
-                    { replacements: [data.id, order, data.quantity] })
-        }
-        return order
+    static async store(orders) {
+        
+       return await sequelize.query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?)',
+            { replacements: 
+                [
+                    orders.date_time, 
+                    orders.total, 
+                    orders.state, 
+                    orders.user_id, 
+                    orders.paymentmethod
+                ] 
+            })             
     }
 
     static async setUpdate(id, orders) {
