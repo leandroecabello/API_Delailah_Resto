@@ -125,7 +125,7 @@ Ejemplo
 
 En **Header** configurar **"KEY"** como **"Authorization"** y en **"VALUE"** colocar **"Bearer "** y el **"token"** correspondiente.
 
-**obs :** _dejar espacio entre el **barer** y el **token**_
+**obs :** _dejar espacio entre el **bearer** y el **token**_
 
 Respuesta
 
