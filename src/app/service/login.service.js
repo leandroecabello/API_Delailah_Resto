@@ -16,6 +16,15 @@ class LoginService {
             type: sequelize.QueryTypes.SELECT
         })
     }
+
+    static async addToken(token, id){
+        return await sequelize.query('UPDATE user SET token = ? WHERE id = ?', {
+            replacements: [
+                token,
+                id
+            ]
+        })  
+    }
 }
 
 module.exports = LoginService

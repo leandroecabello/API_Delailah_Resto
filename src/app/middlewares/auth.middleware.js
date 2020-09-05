@@ -1,6 +1,6 @@
 const {verify} = require('jsonwebtoken')
 const config = require('../../config')
-const UsersService = require('../service/user.service')
+/* const UsersService = require('../service/user.service') */
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1]
@@ -9,11 +9,13 @@ const verifyToken = (req, res, next) => {
     const checkToken = verify(token, config.JWT.PRIVATE_KEY)
     if(checkToken){
       req.user = checkToken
+      console.log(req.user.fullname)
       next()
     }
     
     
   } catch (error) {
+    console.log(error)
     res
       .status(401)
       .send({ error: 'Unauthorized.', message: 'Token verification failed.' })
