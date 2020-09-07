@@ -9,7 +9,7 @@ const config = {
     },
     JWT: {
         PRIVATE_KEY: 'secret',
-        EXPIRES_TIME: 10
+        EXPIRES_TIME: 20
     }
 }
 module.exports = config

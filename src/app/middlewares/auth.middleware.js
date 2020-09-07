@@ -5,20 +5,28 @@ const config = require('../../config')
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1]
 
+  //const checkToken = verify(token, config.JWT.PRIVATE_KEY)
   try {
     const checkToken = verify(token, config.JWT.PRIVATE_KEY)
+    console.log(checkToken)
     if(checkToken){
       req.user = checkToken
       console.log(req.user.fullname)
       next()
     }
-    
-    
+
   } catch (error) {
     console.log(error)
-    res
+    if(error.name === 'TokenExpiredError'){
+      res
+      .status(401)
+      .send({ error: 'Unauthorized.', message: 'Token expired.' })
+    }else{
+      res
       .status(401)
       .send({ error: 'Unauthorized.', message: 'Token verification failed.' })
+    }
+    
   }
 
 }
