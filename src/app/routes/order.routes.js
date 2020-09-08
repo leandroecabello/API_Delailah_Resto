@@ -4,20 +4,14 @@ const { verifyToken, verifyRole } = require('../middlewares/auth.middleware')
 const router = Router()
 
 router
-    .get('/', verifyToken, verifyRole, async(req, res) => {
-        await OrdersController.getAll(req, res)
-    })
-    .post('/', verifyToken, async(req, res) => {
-        await OrdersController.add(req, res)
-    })
-    .get('/:id', verifyToken, verifyRole, async(req, res) => {
-        await OrdersController.getById(req, res)
-    })
-    .put('/:id', verifyToken, verifyRole, async(req, res) => {
-        await OrdersController.updateRegistry(req, res)
-    })
-    .delete('/:id', verifyToken, verifyRole, async(req, res) => {
-        await OrdersController.deleteById(req, res)
-    })
+    .get('/', verifyToken, verifyRole, OrdersController.getAll)
+    
+    .post('/addOrder', verifyToken, OrdersController.add)
+
+    .get('/:id', verifyToken, verifyRole, OrdersController.getById)
+
+    .put('/edit/:id', verifyToken, verifyRole, OrdersController.updateRegistry)
+
+    .delete('/delete/:id', verifyToken, verifyRole, OrdersController.deleteById)
 
 module.exports = router

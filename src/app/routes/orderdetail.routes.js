@@ -4,12 +4,8 @@ const OrderDetailController = require('../controllers/orderdetail.controller')
 const router = Router()
 
 router  
-    .get('/', async (req, res) => {
-        await OrderDetailController.getAll(req, res)
-    })
+    .get('/', OrderDetailController.getAll)
 
-    .get('/:order_id', async(req, res) => {
-        await OrderDetailController.getById(req, res)
-    })
+    .get('/:order_id', OrderDetailController.getById)
 
 module.exports = router
