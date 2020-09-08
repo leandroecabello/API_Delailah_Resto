@@ -19,13 +19,19 @@ class UsersController {
     static async getById(req, res) {
 
         const id = req.params.id
-        
+        const userId = req.user.id
+
         try {
         
             const user = await UsersService.getOneById(id)
-            res.status(200).json(user)
-            console.log(user)
-                
+            
+            if(user[0].id === userId){
+                res.status(200).json(user)
+                console.log(user)
+            }else{
+                res.status(403).json({ message: 'Access denied.'})
+            }   
+
         } catch (error) {
         
             res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})

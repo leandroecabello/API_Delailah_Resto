@@ -8,7 +8,7 @@ router
 
     .post('/signin', UsersController.add)
 
-    .get('/:id', verifyToken, verifyRole, UsersController.getById)
+    .get('/:id', verifyToken, UsersController.getById)
 
     .put('/edit/:id', verifyToken, verifyRole, UsersController.updateRegistry)
     
