@@ -88,6 +88,10 @@ class OrdersController{
                     const modifiedOrder = { ...order, ...params }
                     await OrdersService.setUpdate(id, modifiedOrder)
                     res.status(200).json({ message: `Order with id ${id} updated successfully.` })
+                    /* const { total = montoTotal, dateTime= new Date(), paymentMethod, state, user_id } = req.body
+                    const modifiedProduct = { productName, description, price, productImage, subitem_id }
+                    await ProductService.setUpdate(id, modifiedProduct)
+                    res.status(200).json({ message: `Product with id ${id} updated successfully.` }) */
                 
                 } else {
                  

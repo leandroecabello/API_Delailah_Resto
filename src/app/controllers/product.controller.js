@@ -1,5 +1,4 @@
 const ProductsService = require('../service/product.service')
-const { filterParams } = require('../middlewares/functions')
 
 class ProductsController {
 
@@ -56,23 +55,21 @@ class ProductsController {
         
             try {
                 const product = await ProductsService.getOneById(id)
-
+                
                 if (product[0]) {
-             
+                    
                     const { product_name, description, price, product_image } = req.body
-            
-                    const params = filterParams({ product_name, description, price, product_image })
-                    const modifiedProduct = { ...product, ...params }
+                    const modifiedProduct = { product_name, description, price, product_image }
                     await ProductsService.setUpdate(id, modifiedProduct)
                     res.status(200).json({ message: `Product with id ${id} updated successfully.` })
                 
                 } else {
-                 
+
                     res.status(404).json({ message: 'Not found id' })
                 }
         
             } catch (error) {
-
+                console.log(error)
                 res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
             }
 

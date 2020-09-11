@@ -1,5 +1,4 @@
 const UsersService = require('../service/user.service')
-const { filterParams } = require('../middlewares/functions')
 
 class UsersController {
 
@@ -19,18 +18,21 @@ class UsersController {
     static async getById(req, res) {
 
         const id = req.params.id
-        const userId = req.user.id
+        //const userId = req.user.id
+        //const role = req.user.is_admin
 
         try {
         
             const user = await UsersService.getOneById(id)
             
-            if(user[0].id === userId){
+            console.log(user)
+            res.status(200).json(user)
+            /* if(user[0].id === userId || role !== 0){
                 res.status(200).json(user)
                 console.log(user)
             }else{
                 res.status(403).json({ message: 'Access denied.'})
-            }   
+            } */   
 
         } catch (error) {
         
@@ -65,10 +67,14 @@ class UsersController {
 
                 if (user[0]) {
              
-                    const { fullname, email, phone, adress } = req.body
+/*                     const { fullname, email, phone, adress } = req.body
             
                     const params = filterParams({ fullname, email, phone, adress })
                     const modifiedUser = { ...user, ...params }
+                    await UsersService.setUpdate(id, modifiedUser)
+                    res.status(200).json({ message: `User with id ${id} updated successfully.` }) */
+                    const { fullname, email, phone, adress } = req.body
+                    const modifiedUser = { fullname, email, phone, adress }
                     await UsersService.setUpdate(id, modifiedUser)
                     res.status(200).json({ message: `User with id ${id} updated successfully.` })
                 
